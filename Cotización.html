@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="author"content="Hernández Mendiola Frida Yanin">
+<title>Banquetes Venecia</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <div class="logo">
+        <img src="imagenes/chef-masculino.png" alt="logo" class="logo-img">
+    </div>
+    <nav class="navbar">
+        <div class="dropdown-menu">
+            <img src="imagenes/menú.png" alt="Menú" class="dropdown-img zoom">
+            <div class="dropdown-content">
+                <a href="idk.html">Home</a>
+                <a href="Servicio de comida.html">Servicio<br>de comida</a>
+                <a href="Mobiliario.html">Mobiliario</a>
+                <a href="Paquetes.html">Paquetes</a>
+                <a href="Cotización.html">Cotización</a>
+            </div>
+        </div>
+        <a href="carrito.html"><img src="imagenes/carrito.png" class="cart-img zoom" alt="Carrito"></a>
+    </nav>
+</header>
+
+<main>
+    <section class="hero">
+        <img src="imagenes/Banquetes Venecia (15).png" alt="Banquetes Venecia" class="hero-img">
+    </section>
+    <div class="quote-details">
+        <div class="quote-company">
+            <label for="clientName">Nombre del Cliente:</label>
+            <input type="text" id="clientName" name="clientName" class="input-field" required>
+            <br><br><br>
+            <label for="clientAddress">Correo del Cliente:</label>
+            <input type="text" id="clientAddress" name="clientAddress" class="input-field" required>
+            <br><br><br>
+            <label for="clientPhone">Teléfono:</label>
+            <input type="tel" id="clientPhone" name="clientPhone" class="input-field" required>
+            <br><br><br>
+            <label for="eventDate">Fecha del Evento:</label>
+            <input type="date" id="eventDate" name="eventDate" class="input-field" required>
+            <br><br><br>
+            <label for="numberOfPeople">Número de Personas:</label>
+            <input type="number" id="numberOfPeople" name="numberOfPeople" class="input-field" required>
+            <br><br><br>
+            <label for="eventType">Tipo de Evento:</label>
+            <select id="eventType" name="eventType" class="input-field" required>
+                <option value="Boda">Boda</option>
+                <option value="Cumpleaños">Cumpleaños</option>
+                <option value="Aniversario">Aniversario</option>
+                <option value="Evento Corporativo">Evento Corporativo</option>
+                <option value="Evento Corporativo">Otro</option>
+            </select>
+        </div>
+    </div>
+    <br><br>
+    <br><br>
+    <div class="text-center">
+    <h1>Productos</h1>
+</div>
+    <div class="container">
+        <ul class="cart-items-list" id="cart-items">
+            <!-- Los productos añadidos al carrito aparecerán aquí -->
+        </ul>
+        <p>Total: $<span id="total-price">0</span></p>
+        <a href="idk.html" class="cart-link">Volver a la tienda</a>
+    </div>
+
+    <script>
+        
+document.addEventListener('DOMContentLoaded', () => {
+    const cartItems = document.getElementById('cart-items');
+    const totalPriceElement = document.getElementById('total-price');
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function displayCart() {
+        cartItems.innerHTML = '';
+        let totalPrice = 0;
+        cart.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.name} - $${item.price} x ${item.quantity}`;
+            cartItems.appendChild(li);
+            totalPrice += item.price * item.quantity;
+        });
+        totalPriceElement.textContent = totalPrice.toFixed(2);
+    }
+
+    displayCart();
+});
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author"content="Hernández Mendiola Frida Yanin">
+    <title>Pago con Visa</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function simulatePayment(event) {
+            event.preventDefault();
+            const cardname = document.getElementById('cardname');
+            const cardNumber = document.getElementById('cardNumber');
+            const expiryDate = document.getElementById('expiryDate');
+            const cvv = document.getElementById('cvv');
+
+            if (!validateCardName(cardname.value) ||
+                !validateCardNumber(cardNumber.value) ||
+                !validateExpiryDate(expiryDate.value) ||
+                !validateCVV(cvv.value)) {
+                return;
+            }
+
+            const totalPrice = localStorage.getItem('totalPrice');
+            document.getElementById('result').textContent = `Procesando el pago...`;
+            
+            // Simulación de un proceso de pago (aquí se puede añadir lógica real de pago)
+            setTimeout(() => {
+                document.getElementById('result').textContent = `Pago realizado con éxito con VISA. Total: $${totalPrice}`;
+                // Limpiar el carrito
+                clearCart();
+            }, 2000); // Simulación de espera de 2 segundos
+        }
+
+        function clearCart() {
+            // Limpiar el carrito localmente
+            localStorage.removeItem('cart');
+            localStorage.removeItem('totalPrice');
+        }
+
+        function validateCardName(name) {
+            if (!name.match(/^[a-zA-Z ]+$/)) {
+                alert("Por favor, ingrese un nombre válido en la tarjeta (solo letras y espacios).");
+                return false;
+            }
+            return true;
+        }
+
+        function validateCardNumber(cardNumber) {
+            if (!cardNumber.match(/^\d{16}$/)) {
+                alert("Por favor, ingrese un número de tarjeta válido (exactamente 16 dígitos numéricos).");
+                return false;
+            }
+            return true;
+        }
+
+        function validateExpiryDate(expiryDate) {
+            // Validación personalizada para fecha de expiración (MM/AA)
+            const today = new Date();
+            const currentYear = today.getFullYear() % 100; // Año actual en formato de dos dígitos
+            const [inputMonth, inputYear] = expiryDate.split('/').map(part => parseInt(part));
+
+            if (
+                !expiryDate.match(/^(0[1-9]|1[0-2])\/\d{2}$/) || // Formato MM/AA válido
+                inputYear < 24 || // Año debe ser 2024 o posterior
+                (inputYear === 24 && inputMonth < today.getMonth() + 1) // Si es 2024, mes debe ser igual o mayor al actual
+            ) {
+                alert("Por favor, ingrese una fecha de expiración válida (MM/AA). El año debe ser 2024 o posterior.");
+                return false;
+            }
+            return true;
+        }
+
+        function validateCVV(cvv) {
+            if (!cvv.match(/^\d{3}$/)) {
+                alert("Por favor, ingrese un CVV válido (exactamente 3 dígitos numéricos).");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="container-payment">
+        <h1>Pago Visa</h1>
+        <hr>
+        <form onsubmit="simulatePayment(event)">
+            <label for="cardname">Nombre en la tarjeta</label>
+            <input type="text" id="cardname" name="card-name" required pattern="[a-zA-Z ]+" title="Ingrese solo letras y espacios">
+
+            <label for="cardNumber">Número de Tarjeta</label>
+            <input type="text" id="cardNumber" name="cardNumber" placeholder="**** **** **** ****" required pattern="\d{16}" title="Ingrese exactamente 16 dígitos numéricos">
+            
+            <label for="expiryDate">Fecha de Expiración</label>
+            <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/AA" required pattern="(0[1-9]|1[0-2])\/\d{2}" title="Ingrese una fecha válida (MM/AA). El año debe ser 2024 o posterior">
+            
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" name="cvv" placeholder="CVV" required pattern="\d{3}" title="Ingrese exactamente 3 dígitos numéricos">
+            
+            <button type="submit">Pagar</button>
+        </form>
+        <p class="result" id="result"></p>
+    </div>
+    <div class="text-center">
+        <a href="idk.html" class="button-visa">Volver al inicio</a>
+        <a href="carrito.html" class="button-visa">Volver al carrito</a>
+    </div>
+</body>
+</html>

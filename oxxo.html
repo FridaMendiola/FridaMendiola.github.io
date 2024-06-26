@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author"content="Hernández Mendiola Frida Yanin">
+    <title>Pago con Oxxo</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function generateOxxoCode() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 12; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                code += characters[randomIndex];
+            }
+            return code;
+        }
+
+        function simulatePayment(event) {
+            event.preventDefault();
+            const code = generateOxxoCode();
+            document.getElementById('result').textContent = 'Código de Pago Oxxo: ' + code;
+        }
+    </script>
+</head>
+<body>
+    <div class="container-payment">
+        <h1>Pago con Oxxo</h1>
+        <hr>
+        <div class="text-center">
+        <img src="imagenes/codigodebarras.png">
+    </div>
+    <h3>Tipo de pago</h3> <p>Servicios de Banquetes</p>
+        <form onsubmit="simulatePayment(event)">
+            <label for="name">Nombre Completo</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <button type="submit">Generar Código de Pago</button>
+        </form>
+        <p class="result" id="result"></p>
+    </div>
+</div>
+<div class="text-center">
+<a  href="carrito.html" class="button-visa">Volver al carrito</a>
+<a  href="idk.html" class="button-visa">Volver al inicio</a>
+</div>
+</body>
+</html>
+ 

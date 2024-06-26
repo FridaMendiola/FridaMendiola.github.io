@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banquetes Venecia</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <div class="logo">
+        <img src="imagenes/chef-masculino.png" alt="logo" class="logo-img">
+    </div>
+    <nav class="navbar">
+        <div class="dropdown-menu">
+            <img src="imagenes/menú.png" alt="Menú" class="dropdown-img zoom">
+            <div class="dropdown-content">
+                <a href="idk.html">Home</a>
+                <a href="Servicio de comida.html">Servicio<br>de comida</a>
+                <a href="Mobiliario.html">Mobiliario</a>
+                <a href="Paquetes.html">Paquetes</a>
+                <a href="Cotización.html">Cotización</a>
+            </div>
+        </div>
+        <a href="carrito.html"><img src="imagenes/carrito.png" class="cart-img zoom" alt="Carrito"></a>
+    </nav>
+</header>
+
+<main>
+    <section class="hero">
+        <img src="imagenes/Banquetes Venecia (7).png" alt="Banquetes Venecia" class="hero-img">
+    </section>
+<table class="space-table">
+    <tr>
+        <td class="table-cell"><img src="imagenes/circulo-1-2.png" width="58"></td>
+        <td class="table-cell">
+            <p>Mesa rectangular <br> (10 personas) </p>
+            <h3>$50 c/u</h3>
+
+        </td>
+        <td class="table-cell"></td>
+        <td class="table-cell">
+            <img src="imagenes/mesatablon.jpg" width="300" height="200">
+        </td>
+        <td class="table-cell">
+            <div class="centered">
+                <abbr title="Agregar al carrito">      <img src="imagenes/image (15).png" width="150"alt="Mesa rectangular" class="product-image add-to-cart" data-name="Mesa rectangular" data-price="50" data-image="imagenes/mesatablon.jpg"></abbr><br><br><br><br>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="table-cell"><img src="imagenes/image (11).png"></td>
+        <td class="table-cell">
+            <p>Mesa redonda <br> (10 personas) </p>
+            <h3>$50 c/u</h3>
+
+        </td>
+        <td class="table-cell"></td>
+        <td class="table-cell">
+            <img src="imagenes/mesaredonda.jpg" width="300" height="200">
+        </td>
+        <td class="table-cell">
+            <div class="centered">
+                <abbr title="Agregar al carrito">    <img src="imagenes/image (15).png" width="150"alt="Mesa redonda" class="product-image add-to-cart" data-name="Mesa redonda" data-price="70" data-image="imagenes/mesaredonda.jpg"></abbr><br><br><br><br>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="table-cell"><img src="imagenes/image (12).png"></td>
+        <td class="table-cell">
+            <p>Mesa cuadrada <br> (12 personas) </p>
+            <h3>$70 c/u</h3>
+
+        </td>
+        <td class="table-cell"></td>
+        <td class="table-cell">
+            <img src="imagenes/mesacuadrada.jpg" width="300" height="200">
+        </td>
+        <td class="table-cell">
+            <div class="centered">
+                <abbr title="Agregar al carrito">    <img src="imagenes/image (15).png" width="150"alt="Mesa cuadrada" class="product-image add-to-cart" data-name="Mesa cuadrada" data-price="50" data-image="imagenes/mesacuadrada.jpg"></abbr><br><br><br><br>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="table-cell"><img src="imagenes/image (13).png"></td>
+        <td class="table-cell">
+            <p>Mesa infantil <br> (8 personas) </p>
+            <h3>$60 c/u</h3>
+
+        </td>
+        <td class="table-cell"></td>
+        <td class="table-cell">
+            <img src="imagenes/mesainfantil.jpg" width="300" height="200">
+        </td>
+        <td class="table-cell">
+            <div class="centered">
+                <abbr title="Agregar al carrito">    <img src="imagenes/image (15).png" width="150"alt="Mesa infantil" class="product-image add-to-cart" data-name="Mesa infantil" data-price="50" data-image="imagenes/mesainfantil.jpg"></abbr><br><br><br><br>
+            </div>
+        </td>
+    </tr>
+</table>
+<br>
+<div class="text-center">
+    <a href="Mobiliario.html"><img src="imagenes/Mobiliario .png" width="150 px" class="zoom" ></a>
+    <a href="idk.html"><img src="imagenes/inicio.png" width="150 px" class="zoom" ></a><br><br>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const productImages = document.querySelectorAll('.add-to-cart');
+  const cartLink = document.getElementById('cart-link');
+  const cartImagesContainer = document.getElementById('cart-images-container');
+  
+  productImages.forEach(image => {
+      image.addEventListener('click', () => {
+          const name = image.getAttribute('data-name');
+          const price = parseFloat(image.getAttribute('data-price'));
+          const imageUrl = image.getAttribute('data-image');
+          addItemToCart(name, price, imageUrl);
+      });
+  });
+  function addItemToCart(name, price, imageUrl) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const existingItem = cart.find(item => item.name === name);
+      if (existingItem) {
+          existingItem.quantity += 1;
+      } else {
+          const item = { name, price, imageUrl, quantity: 1 };
+          cart.push(item);
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert('El producto se agregó al carrito');
+
+      // Actualizar el enlace al carrito
+      if (cart.length > 0) {
+          cartLink.textContent = `Ver Carrito (${cart.length})`;
+      }
+  
+      // Mostrar la imagen del producto en el contenedor del carrito
+      updateCartImages();
+  }
+  
+  function updateCartImages() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cartImagesContainer.innerHTML = ''; // Limpiar contenedor
+      cart.forEach(item => {
+          const img = document.createElement('img');
+          img.src = item.imageUrl;
+          img.alt = item.name;
+          img.width = 200;
+          img.height = 200;
+          cartImagesContainer.appendChild(img);
+      });
+  }
+  
+  // Inicializar las imágenes del carrito al cargar la página
+  updateCartImages();
+  });
+  
+</script>
+</body>
+</html>

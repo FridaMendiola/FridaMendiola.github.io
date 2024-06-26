@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banquetes Venecia</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <div class="logo">
+        <img src="imagenes/chef-masculino.png" alt="logo" class="logo-img">
+    </div>
+    <nav class="navbar">
+        <div class="dropdown-menu">
+            <img src="imagenes/menú.png" alt="Menú" class="dropdown-img zoom">
+            <div class="dropdown-content">
+                <a href="idk.html">Home</a>
+                <a href="Servicio de comida.html">Servicio <br>de comida</a>
+                <a href="Mobiliario.html">Mobiliario</a>
+                <a href="Paquetes.html">Paquetes</a>
+                <a href="Cotización.html">Cotización</a>
+            </div>
+        </div>
+        <a href="carrito.html"><img src="imagenes/carrito.png" class="cart-img zoom" alt="Carrito"></a>
+    </nav>
+</header>
+
+<main>
+    <section class="hero">
+        <img src="imagenes/Banquetes Venecia (4).png" alt="Banquetes Venecia" class="hero-img">
+    </section>
+<table class="middle-line-table">
+  <tr>
+    <td class="table-cell"><img src="imagenes/circulo-1-2.png" width="58px"></td>
+    <td></td>
+    <td class="table-cell"><img src="imagenes/image (11).png"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><p>• Rajas con crema</p></td>
+    <td></td>
+    <td><p>• Alambre</p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><p>• Chicharrón en salsa verde</p></td>
+    <td></td>
+    <td><p>• Bistec en chile morita, pasilla o verde</p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><p>• Papas con longaniza</p></td>
+    <td></td>
+    <td><p>• Bistec en chile morita, pasilla o verde </p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><p>• Huevo en salsa verde o roja</p></td>
+    <td></td>
+    <td><p>• Ensalada de pollo</p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><p>• Salchichas a la mexicana</p></td>
+    <td></td>
+    <td><p>• Tinga de pollo </p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><p> • Tacos dorados de papa</p></td>
+    <td></td>
+    <td><p>  • Mole con pollo    </p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><p>• Calabacitas con tocino    </p></td>
+    <td></td>
+    <td><p>  • Pollo en adobo    </p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><p>  • Espinacas a la crema    </p></td>
+    <td></td>
+    <td><p>  • Cerdo con rajas.    </p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><p> • Ejotes con huevo   </p></td>
+     <td></td>
+    <td><p>  • Cochinita pibil.    </p></td>
+  </tr> 
+   <tr>
+    <td></td>
+    <td><p> • Papas con rajas    </p></td>
+    <td></td>
+    <td><p>  • Pollo a la crema.    </p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><p> • Chayotes con queso manchego </p></td>
+    
+    <td></td>
+    <td>   </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>          <h3>$120 por persona</h3>    </td>
+    <td></td>
+    <td> <h3>$100 por persona</h3> </td>
+  </tr>
+</table>
+<table class="two-column-table">
+  <tr>
+    <td><div class="text-center"><img src="imagenes/imagen7.jpg" width="250" height="200"></div></td>
+    <td><div class="text-center"><img src="imagenes/imagen8.jpg" width="250" height="200"></div></td>
+
+  </tr>
+ 
+  <tr>
+    <td> <abbr title="Agregar al carrito"> <div class="text-center"><img src="imagenes/image (15).png" width="150"  alt="taquiza 1" class="product-image add-to-cart" data-name="Taquiza 1" data-price="100" data-image="imagenes/imagen7.jpg"></abbr><br><br><br></div></td>
+    <td><abbr title="Agregar al carrito"> <div class="text-center"><img src="imagenes/image (15).png"  width="150" alt="taquiza 2" class="product-image add-to-cart" data-name="Taquiza 2" data-price="120" data-image="imagenes/imagen8.jpg"><abbr></abbr><br><br><br></div></td>
+
+  </tr>
+</table>
+<br>
+<hr>
+<div class="text-center">
+    <a href="Servicio de comida.html"><img src="imagenes/comida.png" width="150 px" class="zoom" ></a>
+    <a href="idk.html"><img src="imagenes/inicio.png" width="150 px" class="zoom" ></a><br><br>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+const productImages = document.querySelectorAll('.add-to-cart');
+const cartLink = document.getElementById('cart-link');
+const cartImagesContainer = document.getElementById('cart-images-container');
+
+productImages.forEach(image => {
+    image.addEventListener('click', () => {
+        const name = image.getAttribute('data-name');
+        const price = parseFloat(image.getAttribute('data-price'));
+        const imageUrl = image.getAttribute('data-image');
+        addItemToCart(name, price, imageUrl);
+    });
+});
+
+function addItemToCart(name, price, imageUrl) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const existingItem = cart.find(item => item.name === name);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        const item = { name, price, imageUrl, quantity: 1 };
+        cart.push(item);
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert('El producto se agregó al carrito');
+
+    // Actualizar el enlace al carrito
+    if (cart.length > 0) {
+        cartLink.textContent = `Ver Carrito (${cart.length})`;
+    }
+
+    // Mostrar la imagen del producto en el contenedor del carrito
+    updateCartImages();
+}
+
+function updateCartImages() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cartImagesContainer.innerHTML = ''; // Limpiar contenedor
+    cart.forEach(item => {
+        const img = document.createElement('img');
+        img.src = item.imageUrl;
+        img.alt = item.name;
+        img.width = 200;
+        img.height = 200;
+        cartImagesContainer.appendChild(img);
+    });
+}
+
+// Inicializar las imágenes del carrito al cargar la página
+updateCartImages();
+});
+</script>
+</body>
+</html>
+
+

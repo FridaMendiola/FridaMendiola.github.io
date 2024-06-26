@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author"content="Hernández Mendiola Frida Yanin">
+    <title>Carrito</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function validateCheckout() {
+            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cartItems.length === 0) {
+                alert('Debe agregar productos al carrito antes de proceder al pago.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="cart-container">
+        <h1>Carrito de Compras</h1>
+        <hr>
+        <ul class="cart-items-list"></ul>
+        <p class="empty-cart-message">El carrito está vacío.</p>
+        <p>Total: $<span class="total-price">0</span></p>
+        <div class="text-center">
+            <button id="clear-cart-button">Borrar todo</button>
+            <br>
+            <a href="idk.html" class="cart-link">Volver a la tienda</a>
+            <br>
+        </div>
+    </div>
+
+    <div class="payment-form-container">
+        <h1>Métodos de Pago</h1>
+        <p>Elige tu método de pago</p>
+        <div class="payment-methods">
+            <div class="method">
+                <img src="imagenes/visa.png" alt="Visa">
+                <h2>Visa</h2>
+                <a href="visa.html" class="payment-link" onclick="return validateCheckout()">Pagar con Visa</a>
+            </div>
+            <div class="method">
+                <img src="imagenes/mastercard.png" alt="MasterCard">
+                <h2>MasterCard</h2>
+                <a href="mastercard.html" class="payment-link" onclick="return validateCheckout()">Pagar con MasterCard</a>
+                        </div>
+            <div class="method">
+                <img src="imagenes/paypal.png" alt="PayPal">
+                <h2>PayPal</h2>
+                <a href="paypal.html" class="payment-link" onclick="return validateCheckout()">Pagar con PayPal</a>
+            </div>
+            <div class="method">
+                <img src="imagenes/oxxo.png" alt="Oxxo">
+                <h2>Oxxo</h2>
+                <a href="oxxo.html" class="payment-link" onclick="return validateCheckout()">Pagar con Oxxo</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartItems = document.querySelector('.cart-items-list');
+            const totalPriceElement = document.querySelector('.total-price');
+            const clearCartButton = document.getElementById('clear-cart-button');
+            const emptyCartMessage = document.querySelector('.empty-cart-message');
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            function displayCart() {
+                cartItems.innerHTML = '';
+                let totalPrice = 0;
+                if (cart.length === 0) {
+                    emptyCartMessage.style.display = 'block';
+                } else {
+                    emptyCartMessage.style.display = 'none';
+                }
+                cart.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    li.classList.add('cart-item');
+
+                    const img = document.createElement('img');
+                    img.src = item.imageUrl;
+                    img.alt = item.name;
+
+                    const productInfo = document.createElement('div');
+                    productInfo.classList.add('product-info');
+                    const productName = document.createElement('h3');
+                    productName.textContent = item.name;
+                    const productPrice = document.createElement('p');
+                    productPrice.textContent = `$${item.price}`;
+
+                    const quantityDiv = document.createElement('div');
+                    quantityDiv.classList.add('quantity-div');
+                    const quantityLabel = document.createElement('label');
+                    quantityLabel.textContent = 'Cantidad:';
+                    const quantityInput = document.createElement('input');
+                    quantityInput.type = 'number';
+                    quantityInput.min = '1';
+                    quantityInput.value = item.quantity;
+                    quantityInput.classList.add('quantity-input-cart');
+                    quantityInput.dataset.index = index;
+                    quantityInput.addEventListener('change', (e) => {
+                        updateQuantity(index, parseInt(e.target.value));
+                    });
+
+                    const totalPriceDiv = document.createElement('div');
+                    totalPriceDiv.classList.add('total-price');
+                    totalPriceDiv.textContent = `$${(item.price * item.quantity).toFixed(2)}`;
+
+                    const removeButton = document.createElement('button');
+                    removeButton.textContent = 'Eliminar';
+                    removeButton.classList.add('remove-item');
+                    removeButton.dataset.index = index;
+                    removeButton.addEventListener('click', () => {
+                        removeItem(index);
+                    });
+
+                    quantityDiv.appendChild(quantityLabel);
+                    quantityDiv.appendChild(quantityInput);
+
+                    productInfo.appendChild(productName);
+                    productInfo.appendChild(productPrice);
+
+                    li.appendChild(img);
+                    li.appendChild(productInfo);
+                    li.appendChild(quantityDiv);
+                    li.appendChild(totalPriceDiv);
+                    li.appendChild(removeButton);
+
+                    cartItems.appendChild(li);
+
+                    totalPrice += item.price * item.quantity;
+                });
+                totalPriceElement.textContent = totalPrice.toFixed(2);
+                localStorage.setItem('totalPrice', totalPrice.toFixed(2));
+                localStorage.setItem('cart', JSON.stringify(cart));
+            }
+
+            function clearCart() {
+                cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                displayCart();
+            }
+
+            function updateQuantity(index, newQuantity) {
+                if (newQuantity > 0) {
+                    cart[index].quantity = newQuantity;
+                    displayCart();
+                }
+            }
+
+            function removeItem(index) {
+                cart.splice(index, 1);
+                displayCart();
+            }
+
+            clearCartButton.addEventListener('click', clearCart);
+
+            displayCart();
+        });
+    </script>
+</body>
+</html>
